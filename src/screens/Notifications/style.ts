@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: fontSizes.lg,
-    color: colors.textSecondary,
+    color: colors.TEXT_SECONDARY,
   },
 });
 

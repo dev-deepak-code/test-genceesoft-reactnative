@@ -37,6 +37,8 @@ project-root/
 │
 ├── src/
 │   ├── assets/               # Icons and static images
+│   ├── components/           # Reusable UI components (e.g. Button, Post, TextInput)
+│   ├── helpers/              # AsyncStorage helpers
 │   ├── screens/              # Home, Profile, Notifications
 │   ├── navigation/           # BottomTabNavigation.tsx
 │   ├── services/             # API calls (fetchPosts, fetchUsers)

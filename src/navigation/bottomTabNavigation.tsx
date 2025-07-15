@@ -2,12 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {HomeScreen, ProfileScreen, NotificationsScreen} from '../screens';
 import { Image } from 'react-native';
-import homeActive from '../assets/icons/home_active.png';
-import homeInactive from '../assets/icons/home_inactive.png';
-import userActive from '../assets/icons/user_active.png';
-import userInactive from '../assets/icons/user_inactive.png';
-import bellActive from '../assets/icons/bell_active.png';
-import bellInactive from '../assets/icons/bell_inactive.png';
+import { home_active, home_inactive, user_active, user_inactive, bell_active, bell_inactive } from '../assets/icons';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -31,7 +26,7 @@ const BottomTabNavigation: React.FC = () => (
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
-            source={focused ? homeActive : homeInactive}
+            source={focused ? home_active : home_inactive}
             style={{ width: size || 24, height: size || 24 }}
             resizeMode="contain"
           />
@@ -44,7 +39,7 @@ const BottomTabNavigation: React.FC = () => (
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
-            source={focused ? userActive : userInactive}
+            source={focused ? user_active : user_inactive}
             style={{ width: size || 24, height: size || 24 }}
             resizeMode="contain"
           />
@@ -57,11 +52,11 @@ const BottomTabNavigation: React.FC = () => (
       options={{
         tabBarIcon: ({ focused, size }) => (
           <Image
-            source={focused ? bellActive : bellInactive}
+            source={focused ? bell_active : bell_inactive}
             style={{ width: size || 24, height: size || 24 }}
             resizeMode="contain"
           />
-        ),
+        )
       }}
     />
   </Tab.Navigator>

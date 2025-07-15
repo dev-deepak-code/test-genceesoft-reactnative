@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TextInput, Button, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import userImage from '../../assets/icons/user_active.png';
+import { View, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
+import { getItem, setItem } from '../../utils/asyncStorageHelpers';
+import { user_active } from '../../assets/icons';
 import styles from './style';
+import { Button, TextInput } from '../../components';
 
 const DEFAULT_PROFILE = {
   name: 'John Doe',
@@ -18,11 +19,11 @@ export default function ProfileScreen() {
   React.useEffect(() => {
     (async () => {
       try {
-        const stored = await AsyncStorage.getItem('userProfile');
+        const stored = await getItem('userProfile');
         if (stored) {
-          setProfile(JSON.parse(stored));
+          setProfile(stored);
         } else {
-          await AsyncStorage.setItem('userProfile', JSON.stringify(DEFAULT_PROFILE));
+          await setItem('userProfile', DEFAULT_PROFILE);
         }
       } catch (e) {
       }
@@ -32,7 +33,7 @@ export default function ProfileScreen() {
 
   const handleSave = async () => {
     try {
-      await AsyncStorage.setItem('userProfile', JSON.stringify(profile));
+      await setItem('userProfile', profile);
       setEditing(false);
       Alert.alert('Profile saved!');
     } catch (e) {
@@ -40,21 +41,21 @@ export default function ProfileScreen() {
     }
   };
 
-  if (loading) return <ActivityIndicator testID="ActivityIndicator" style={{ flex: 1, alignSelf: 'center' }} />;
+  if (loading) return <ActivityIndicator testID="ActivityIndicator" style={styles.loadingIndicator} />;
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: '#f7f7f7' }}
+      style={styles.keyboardAvoidingView}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={80}
     >
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={userImage} style={styles.profileImage} />
+          <Image source={user_active} style={styles.profileImage} />
         </View>
         <View style={styles.fieldsContainer}>
-          <Text style={styles.label}>Name</Text>
           <TextInput
+            label="Name"
             placeholder="Name"
             value={profile.name}
             onChangeText={name => setProfile(p => ({ ...p, name }))}
@@ -62,8 +63,8 @@ export default function ProfileScreen() {
             editable={editing}
             selectTextOnFocus={editing}
           />
-          <Text style={styles.label}>Email</Text>
           <TextInput
+            label="Email"
             placeholder="Email"
             value={profile.email}
             onChangeText={email => setProfile(p => ({ ...p, email }))}
@@ -73,26 +74,29 @@ export default function ProfileScreen() {
             editable={editing}
             selectTextOnFocus={editing}
           />
-          <Text style={styles.label}>Bio</Text>
           <TextInput
+            label="Bio"
             placeholder="Bio"
             value={profile.bio}
             onChangeText={bio => setProfile(p => ({ ...p, bio }))}
-            style={[styles.input, { height: 80, textAlignVertical: 'top' }, !editing && styles.inputDisabled]}
+            style={[styles.input, styles.bioInput, !editing && styles.inputDisabled]}
             multiline
             editable={editing}
             selectTextOnFocus={editing}
           />
-          <View style={{ marginTop: 24 }}>
+          <View style={styles.buttonRowContainer}>
             {editing ? (
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Button title="Save" onPress={handleSave} />
-                <Button title="Cancel" onPress={() => setEditing(false)} color="gray" />
+              <View style={styles.buttonRow}>
+                <Button title="Save" onPress={handleSave} style={styles.button} textStyle={styles.text} />
+                <Button title="Cancel" onPress={() => setEditing(false)} style={[styles.button, { backgroundColor: 'gray' }]} textStyle={styles.text} />
               </View>
             ) : (
-              <TouchableOpacity style={styles.editButton} onPress={() => setEditing(true)}>
-                <Text style={styles.editButtonText}>Edit Profile</Text>
-              </TouchableOpacity>
+                <Button
+                  style={styles.editButton}
+                  textStyle={styles.text}
+                  title="Edit Profile"
+                  onPress={() => setEditing(true)}
+                />
             )}
           </View>
         </View>
