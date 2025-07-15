@@ -49,6 +49,11 @@ project-root/
 │   ├── HomeScreen.test.tsx
 │   ├── ProfileScreen.test.tsx
 │   └── NotificationsScreen.test.tsx
+│   └── App.test.tsx
+│   └── AsyncStorageHelper.test.tsx
+│   └── Button.test.tsx
+│   └── Post.test.tsx
+│   └── TextInput.test.tsx
 │
 ├── jest.config.js
 ├── App.tsx
