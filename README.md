@@ -58,7 +58,7 @@ project-root/
 
 ### Repo
 git clone https://github.com/dev-deepak-code/test-genceesoft-reactnative.git
-cd delightree-test-task
+cd test-genceesoft-reactnative
 
 ### Android build location
 src --> android_build --> app-release.apk
